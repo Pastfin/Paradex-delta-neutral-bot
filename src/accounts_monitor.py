@@ -16,6 +16,8 @@ warnings.filterwarnings("ignore")
 def update_accounts_info():
     df = pd.read_excel(DATA_DIR + "/accounts.xlsx")
 
+    df = df.sample(frac=1).reset_index(drop=True)
+
     for x in range(df.shape[0]):
         data = df.iloc[x]
 
@@ -85,6 +87,6 @@ def update_accounts_info():
         time.sleep(random.randint(3, 5))
 
     df.to_excel(DATA_DIR + "/accounts.xlsx", index=False)
-    logger.success(f"Updated balances and open positions for {len(df)} accounts.")
+    logger.success(f"Updated balances and open positions for {df.shape[0]} accounts.")
 
     return df
